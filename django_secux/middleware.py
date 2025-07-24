@@ -2,18 +2,37 @@ import re
 from django.utils.deprecation import MiddlewareMixin
 
 _HTML_TYPES = ('text/html', 'application/xhtml+xml')
-SCRIPT_STYLE_RE = re.compile(r'(<script.*?>.*?</script>|<style.*?>.*?</style>)', re.DOTALL | re.IGNORECASE)
-TAG_SPACE_RE = re.compile(r'>\s+<')
-COMMENT_RE = re.compile(r'<!--(?!\[if).*?-->', re.DOTALL)
 
-def minify_html_safe(content):
-    parts = SCRIPT_STYLE_RE.split(content)
-    for i in range(len(parts)):
-        if not parts[i].lower().startswith('<script') and not parts[i].lower().startswith('<style'):
-            parts[i] = COMMENT_RE.sub('', parts[i])
-            parts[i] = TAG_SPACE_RE.sub('><', parts[i])
-            parts[i] = parts[i].strip()
-    return ''.join(parts)
+SCRIPT_STYLE_RE = re.compile(r'(?P<script><script.*?>.*?</script>)|(?P<style><style.*?>.*?</style>)', re.DOTALL | re.IGNORECASE)
+COMMENT_RE = re.compile(r'<!--(?!\[if).*?-->', re.DOTALL)
+TAG_SPACE_RE = re.compile(r'>\s+<')
+WHITESPACE_RE = re.compile(r'\s{2,}')
+CSS_RE = re.compile(r'\s*([{}:;,])\s*')
+IMG_RE = re.compile(r'<img(?![^>]*loading=)([^>]*?)>', re.IGNORECASE)
+
+def minify_html_safe(html):
+    parts = []
+    index = 0
+    for match in SCRIPT_STYLE_RE.finditer(html):
+        start, end = match.span()
+        before = html[index:start]
+        before = COMMENT_RE.sub('', before)
+        before = TAG_SPACE_RE.sub('><', before)
+        before = WHITESPACE_RE.sub(' ', before)
+        before = IMG_RE.sub(r'<img loading="lazy"\1>', before)
+        parts.append(before)
+        tag = match.group()
+        if match.group('style'):
+            tag = re.sub(r'(<style.*?>)(.*?)(</style>)', lambda m: m.group(1) + CSS_RE.sub(r'\1', m.group(2)).replace('\n', '') + m.group(3), tag, flags=re.DOTALL)
+        parts.append(tag)
+        index = end
+    remainder = html[index:]
+    remainder = COMMENT_RE.sub('', remainder)
+    remainder = TAG_SPACE_RE.sub('><', remainder)
+    remainder = WHITESPACE_RE.sub(' ', remainder)
+    remainder = IMG_RE.sub(r'<img loading="lazy"\1>', remainder)
+    parts.append(remainder)
+    return ''.join(parts).strip()
 
 class Minify(MiddlewareMixin):
     def process_response(self, request, response):
