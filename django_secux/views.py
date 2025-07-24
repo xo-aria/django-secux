@@ -7,15 +7,6 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from django.utils.http import http_date
 
-BROKEN_IMAGE_SVG = """
-<svg xmlns="http://www.w3.org/2000/svg" width="200" height="150" viewBox="0 0 200 150">
-  <rect width="100%" height="100%" fill="#f8f8f8"/>
-  <path d="M30 30 h140 v90 h-140 z" fill="#eee" stroke="#999" stroke-width="3"/>
-  <path d="M40 100 l20 -30 l20 20 l20 -30 l20 30 l20 -20 l20 30" stroke="#c00" stroke-width="2" fill="none"/>
-  <text x="100" y="135" font-size="14" fill="#999" text-anchor="middle" font-family="sans-serif">تصویر یافت نشد</text>
-</svg>
-""".strip()
-
 @csrf_exempt
 def cdn_serve(request, file_path):
     if request.method != 'GET':
@@ -44,7 +35,7 @@ def cdn_serve(request, file_path):
 
 def _svg_error():
     return HttpResponse(
-        BROKEN_IMAGE_SVG,
+        'Not found',
         content_type='image/svg+xml',
         status=404,
         headers={
