@@ -3,7 +3,7 @@ from django.utils.deprecation import MiddlewareMixin
 
 _HTML_TYPES = ('text/html', 'application/xhtml+xml')
 
-SCRIPT_STYLE_RE = re.compile(r'(?P<script><script.*?>.*?</script>)|(?P<style><style.*?>.*?</style>)', re.DOTALL | re.IGNORECASE)
+SCRIPT_STYLE_RE = re.compile(r'(?P<script><script.*?>.*?</script>)', re.DOTALL | re.IGNORECASE)
 COMMENT_RE = re.compile(r'<!--(?!\[if).*?-->', re.DOTALL)
 TAG_SPACE_RE = re.compile(r'>\s+<')
 WHITESPACE_RE = re.compile(r'\s{2,}')
@@ -22,8 +22,6 @@ def minify_html_safe(html):
         before = IMG_RE.sub(r'<img loading="lazy"\1>', before)
         parts.append(before)
         tag = match.group()
-        if match.group('style'):
-            tag = re.sub(r'(<style.*?>)(.*?)(</style>)', lambda m: m.group(1) + CSS_RE.sub(r'\1', m.group(2)).replace('\n', '') + m.group(3), tag, flags=re.DOTALL)
         parts.append(tag)
         index = end
     remainder = html[index:]
