@@ -23,16 +23,13 @@ def ai_ratelimit(day_limit=7, extra_threshold=10, block_time=300):
             path = request.path
             today = now().date()
 
-            # Check block memory
             if path in _block_memory and _block_memory[path] > now().timestamp():
                 return HttpResponse(get_secux_message("blocked"), status=429)
 
-            # Log today's request
             obj, _ = PageRequestLog.objects.get_or_create(path=path, date=today)
             obj.count += 1
             obj.save()
 
-            # Calculate average from previous days
             start_day = today - timedelta(days=day_limit)
             avg = (
                 PageRequestLog.objects
