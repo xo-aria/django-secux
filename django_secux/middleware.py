@@ -7,7 +7,6 @@ SCRIPT_STYLE_RE = re.compile(r'(?P<script><script.*?>.*?</script>)', re.DOTALL |
 COMMENT_RE = re.compile(r'<!--(?!\[if).*?-->', re.DOTALL)
 TAG_SPACE_RE = re.compile(r'>\s+<')
 WHITESPACE_RE = re.compile(r'\s{2,}')
-CSS_RE = re.compile(r'\s*([{}:;,])\s*')
 IMG_RE = re.compile(r'<img(?![^>]*loading=)([^>]*?)>', re.IGNORECASE)
 
 def minify_html_safe(html):
