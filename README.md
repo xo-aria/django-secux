@@ -1,5 +1,13 @@
 # django-secux
 
+[![PyPI version](https://img.shields.io/pypi/v/django-secux?label=PyPI&color=blue&logo=python)](https://pypi.org/project/django-secux/)
+[![Python Versions](https://img.shields.io/pypi/pyversions/django-secux?logo=python&color=brightgreen)](https://pypi.org/project/django-secux/)
+[![Django Versions](https://img.shields.io/badge/Django-3.2%20|%204.0%20|%204.2%20|%205.0-blue?logo=django)](#)
+[![License](https://img.shields.io/github/license/xo-aria/django-secux?color=green)](LICENSE)
+[![Stars](https://img.shields.io/github/stars/xo-aria/django-secux?style=social)](https://github.com/xo-aria/django-secux/stargazers)
+[![Issues](https://img.shields.io/github/issues/xo-aria/django-secux?logo=github)](https://github.com/xo-aria/django-secux/issues)
+[![Last Commit](https://img.shields.io/github/last-commit/xo-aria/django-secux?logo=git)](https://github.com/xo-aria/django-secux/commits)
+
 **django-secux** is a simple yet powerful Django security package that protects heavy-load pages by rate-limiting access based on real usage patterns stored in the database.
 
 ---
