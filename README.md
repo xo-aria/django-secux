@@ -1,6 +1,3 @@
-> [!NOTE]  
-> The next step is to add `Fake CDN` for **Cache** And **Minify** your static files
-
 ![django-secux](https://raw.githubusercontent.com/xo-aria/django-secux/refs/heads/main/django-secux.png)
 # django-secux
 
@@ -16,16 +13,16 @@
 
 ---
 
-## 🚀 Features
+## Features
 
-* 🔐 Blocks pages when abnormal request patterns are detected
-* 📊 Logs each view's daily request count in your database
-* 🕝 Automatically blocks overused views for a customizable time window
-* ✅ Super easy to use with just a decorator!
+* Blocks pages when abnormal request patterns are detected
+* Logs each view's daily request count in your database
+* Automatically blocks overused views for a customizable time window
+* Super easy to use with just a decorator!
 
 ---
 
-## 📦 Installation
+## Installation
 
 ```bash
 pip install django-secux
@@ -50,7 +47,7 @@ python manage.py migrate
 
 ---
 
-## ⚙️ Usage
+## Usage
 
 Just decorate your heavy or sensitive views with `@ai_ratelimit()`:
 
@@ -66,14 +63,14 @@ This view will now be monitored. If accessed too frequently within a day, it wil
 
 ---
 
-## ✏️ Customization
+## Customization
 
 You can customize the block and warning messages shown to users in your `settings.py`:
 
 ```python
 SECUX_MESSAGES = {
-    "blocked": "⛔ This page is temporarily blocked. Please try again later.",
-    "rate_exceeded": "⚠️ Rate limit exceeded. This page is blocked temporarily.",
+    "blocked": "This page is temporarily blocked. Please try again later.",
+    "rate_exceeded": "Rate limit exceeded. This page is blocked temporarily.",
 }
 ```
 
@@ -81,7 +78,7 @@ Feel free to translate or rephrase these messages as needed.
 
 ---
 
-## 🧠 Ideas or Issues?
+## Ideas or Issues?
 
 Feel free to contribute, fork or submit issues on GitHub.
 
