@@ -1,3 +1,6 @@
+> [!NOTE]  
+> The next step is to add `Fake CDN` for **Cache** And **Minify** your static files
+
 ![django-secux](https://raw.githubusercontent.com/xo-aria/django-secux/refs/heads/main/django-secux.png)
 # django-secux
 
