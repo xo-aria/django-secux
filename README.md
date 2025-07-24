@@ -43,6 +43,14 @@ MIDDLEWARE = [
     'django_secux.middleware.Minify',
 ]
 ```
+and if you using __Fake CDN__, add this to `urls.py` main:
+
+```python
+urlpatterns = [
+    ...
+    path('', include('django_secux.urls'))
+]
+```
 
 Apply migrations:
 
