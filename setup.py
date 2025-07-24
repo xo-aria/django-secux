@@ -11,6 +11,7 @@ setup(
     include_package_data=True,
     install_requires=[
         'Django>=2.2',
+        'Pillow>=9.0.0',
     ],
     classifiers=[
         'Framework :: Django',
