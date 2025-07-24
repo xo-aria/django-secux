@@ -22,7 +22,8 @@ class Minify(MiddlewareMixin):
             try:
                 content = response.content.decode('utf-8')
                 minified = minify_html_safe(content)
-                response.content = minified.encode('utf-8')
+                protected_content = f"<!-- Protected By Secux -->\n{minified}"
+                response.content = protected_content.encode('utf-8')
                 response['Content-Length'] = str(len(response.content))
             except:
                 pass
