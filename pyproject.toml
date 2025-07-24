@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "django-secux"
-version = "0.1.5"
+version = "0.1.6"
 description = "A smart Django security package to auto-block suspicious traffic"
 readme = "README.md"
 authors = [{ name = "XO Aria", email = "hf18950@gmail.com" }]
