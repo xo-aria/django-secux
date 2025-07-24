@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "django-secux"
+version = "0.1.0"
+description = "A smart Django security package to auto-block suspicious traffic"
+readme = "README.md"
+authors = [{ name = "Your Name", email = "your.email@example.com" }]
+license = { text = "MIT" }
+classifiers = [
+    "Framework :: Django",
+    "Framework :: Django :: 4.2",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "Django>=4.2",
+]
+requires-python = ">=3.8"
+
+[project.urls]
+Homepage = "https://github.com/xo-aria/django-secux"
+Repository = "https://github.com/xo-aria/django-secux"
+Issues = "https://github.com/xo-aria/django-secux/issues"
