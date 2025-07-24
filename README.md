@@ -1,5 +1,5 @@
 ![django-secux](https://raw.githubusercontent.com/xo-aria/django-secux/refs/heads/main/django-secux.png)
-# django-secux
+# django-secux ( **All for in one** )
 
 [![PyPI version](https://img.shields.io/pypi/v/django-secux?label=PyPI&color=blue&logo=python)](https://pypi.org/project/django-secux/)
 [![Python Versions](https://img.shields.io/pypi/pyversions/django-secux?logo=python&color=brightgreen)](https://pypi.org/project/django-secux/)
@@ -15,10 +15,10 @@
 
 ## Features
 
-* Blocks pages when abnormal request patterns are detected
-* Logs each view's daily request count in your database
 * Automatically blocks overused views for a customizable time window
 * Super easy to use with just a decorator!
+* Mininfing and Cache Your HTML / CSS / JS / Images / Fonts
+* Image compressor with `size` argument ( e.g `www.example.com/cdn/images/example.png?size=250` )
 
 ---
 
@@ -63,9 +63,9 @@ This view will now be monitored. If accessed too frequently within a day, it wil
 
 ---
 
-## Customization
+## Customization & Configuration
 
-You can customize the block and warning messages shown to users in your `settings.py`:
+for block messages:
 
 ```python
 SECUX_MESSAGES = {
@@ -73,8 +73,14 @@ SECUX_MESSAGES = {
     "rate_exceeded": "Rate limit exceeded. This page is blocked temporarily.",
 }
 ```
+and for static/media files:
 
-Feel free to translate or rephrase these messages as needed.
+```python
+SECUX_STATIC = [
+    os.path.join(BASE_DIR, "media/uploads"),
+    os.path.join(BASE_DIR, "protected/images"),
+]
+```
 
 ---
 
