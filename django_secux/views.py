@@ -40,13 +40,14 @@ def cdn_serve(request, file_path):
         else:
             return _serve_raw_file(abs_requested_path, ext)
     except:
+        print(f"Error processing file {abs_requested_path}: {str(e)}")
         return _svg_error()
 
 
 def _svg_error():
     return HttpResponse(
         'Not found',
-        content_type='image/svg+xml',
+        content_type='text/plain',
         status=404,
         headers={
             'Cache-Control': 'no-cache, no-store',
