@@ -16,22 +16,32 @@ def cdn_serve(request, file_path):
     if '..' in file_path or file_path.startswith('/'):
         return _svg_error()
 
-    static_root = settings.STATIC_ROOT or os.path.join(settings.BASE_DIR, 'static')
-    full_path = os.path.join(static_root, file_path)
+    abs_requested_path = os.path.abspath(os.path.join(settings.BASE_DIR, 'static', file_path))
 
-    if not os.path.isfile(full_path):
+    allowed = False
+    for base in getattr(settings, 'SECUX_STATIC', []):
+        base_path = os.path.abspath(base)
+        try:
+            if os.path.commonpath([abs_requested_path, base_path]) == base_path:
+                allowed = True
+                break
+        except ValueError:
+            continue 
+
+    if not allowed or not os.path.isfile(abs_requested_path):
         return _svg_error()
 
     ext = os.path.splitext(file_path)[1].lower()
     try:
         if ext in ['.png', '.jpg', '.jpeg', '.webp', '.gif']:
-            return _serve_resized_image(request, full_path, ext)
+            return _serve_resized_image(request, abs_requested_path, ext)
         elif ext in ['.css', '.js']:
-            return _serve_minified_file(request, full_path, ext)
+            return _serve_minified_file(request, abs_requested_path, ext)
         else:
-            return _serve_raw_file(full_path, ext)
+            return _serve_raw_file(abs_requested_path, ext)
     except:
         return _svg_error()
+
 
 def _svg_error():
     return HttpResponse(
