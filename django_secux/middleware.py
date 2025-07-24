@@ -15,7 +15,7 @@ def minify_html_safe(content):
             parts[i] = parts[i].strip()
     return ''.join(parts)
 
-class MinifyMiddleware(MiddlewareMixin):
+class Minify(MiddlewareMixin):
     def process_response(self, request, response):
         content_type = response.get('Content-Type', '')
         if any(ct in content_type for ct in _HTML_TYPES):
