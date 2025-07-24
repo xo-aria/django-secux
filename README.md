@@ -36,6 +36,12 @@ INSTALLED_APPS = [
     ...
     'django_secux',
 ]
+
+# if you want Minify
+MIDDLEWARE = [
+    ...
+    'django_secux.middleware.Minify',
+]
 ```
 
 Apply migrations:
