@@ -1,3 +1,4 @@
+![django-secux](https://raw.githubusercontent.com/xo-aria/django-secux/refs/heads/main/django-secux.png)
 # django-secux
 
 [![PyPI version](https://img.shields.io/pypi/v/django-secux?label=PyPI&color=blue&logo=python)](https://pypi.org/project/django-secux/)
