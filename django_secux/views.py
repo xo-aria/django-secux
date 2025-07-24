@@ -1,26 +1,35 @@
 import os
 import io
-from datetime import datetime, timedelta
 from PIL import Image
+from datetime import datetime, timedelta
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse
 from django.utils.http import http_date
+
+BROKEN_IMAGE_SVG = """
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="150" viewBox="0 0 200 150">
+  <rect width="100%" height="100%" fill="#f8f8f8"/>
+  <path d="M30 30 h140 v90 h-140 z" fill="#eee" stroke="#999" stroke-width="3"/>
+  <path d="M40 100 l20 -30 l20 20 l20 -30 l20 30 l20 -20 l20 30" stroke="#c00" stroke-width="2" fill="none"/>
+  <text x="100" y="135" font-size="14" fill="#999" text-anchor="middle" font-family="sans-serif">تصویر یافت نشد</text>
+</svg>
+""".strip()
 
 @csrf_exempt
 def cdn_serve(request, file_path):
     if request.method != 'GET':
-        return JsonResponse({'error': 'Method not allowed'}, status=405)
+        return _svg_error()
 
     file_path = file_path.strip()
     if '..' in file_path or file_path.startswith('/'):
-        return JsonResponse({'error': 'Invalid path'}, status=400)
+        return _svg_error()
 
     static_root = settings.STATIC_ROOT or os.path.join(settings.BASE_DIR, 'static')
     full_path = os.path.join(static_root, file_path)
 
     if not os.path.isfile(full_path):
-        return JsonResponse({'error': 'File not found'}, status=404)
+        return _svg_error()
 
     ext = os.path.splitext(file_path)[1].lower()
     try:
@@ -30,13 +39,22 @@ def cdn_serve(request, file_path):
             return _serve_minified_file(request, full_path, ext)
         else:
             return _serve_raw_file(full_path, ext)
-    except Exception as e:
-        return JsonResponse({'error': f'Error processing file: {str(e)}'}, status=500)
+    except:
+        return _svg_error()
+
+def _svg_error():
+    return HttpResponse(
+        BROKEN_IMAGE_SVG,
+        content_type='image/svg+xml',
+        status=404,
+        headers={
+            'Cache-Control': 'no-cache, no-store',
+        }
+    )
 
 def _serve_resized_image(request, full_path, ext):
     size = request.GET.get('size', '').strip()
     size = int(size) if size else None
-
     img = Image.open(full_path)
     if img.mode not in ['RGB', 'RGBA']:
         img = img.convert('RGBA' if img.format in ['PNG', 'WEBP'] else 'RGB')
