@@ -15,7 +15,7 @@ def get_secux_message(key):
 
 _block_memory = {}
 
-def ai_ratelimit_ewma(alpha=0.3, warmup_days=7, growth_factor=2.0, block_time=300):
+def ai_ratelimit(alpha=0.3, warmup_days=7, growth_factor=2.0, block_time=300):
     def decorator(view_func):
         @wraps(view_func)
         def _wrapped_view(request, *args, **kwargs):
