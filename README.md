@@ -50,7 +50,7 @@ from django_secux.views import cdn_serve
 
 urlpatterns = [
     ...
-    path('cdn/<path:path>', cdn_serve, name='cdn'),
+    path('cdn/<path:file_path>', cdn_serve, name='cdn'),
 ]
 ```
 
