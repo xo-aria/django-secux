@@ -46,9 +46,11 @@ MIDDLEWARE = [
 and if you using __Fake CDN__, add this to `urls.py` main:
 
 ```python
+from django_secux.views import cdn_serve
+
 urlpatterns = [
     ...
-    path('', include('django_secux.urls'))
+    path('cdn/<path:path>', cdn_serve, name='cdn'),
 ]
 ```
 
