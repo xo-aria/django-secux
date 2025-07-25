@@ -17,6 +17,7 @@ def cdn_serve(request, file_path):
         return _svg_error()
 
     abs_requested_path = os.path.abspath(os.path.join(settings.BASE_DIR, file_path))
+    print(abs_requested_path)
 
     allowed = False
     for base in getattr(settings, 'SECUX_STATIC', []):
