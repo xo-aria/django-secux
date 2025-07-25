@@ -77,6 +77,21 @@ def my_view(request):
 
 This view will now be monitored. If accessed too frequently within a day, it will be blocked for 5 minutes.
 
+And for **Fake CDN** use `/cdn` before __static url__. e.g:
+```
+<img src="/cdn{% static 'example.png' %}">
+```
+and for manage image resoulation, add `size` argument after __static url__. e.g:
+```
+<img src="/cdn{% static 'example.png' %}?size=128">
+```
+
+> [!NOTE]
+> you can use **Fake CDN** for `images` - `fonts` - `css` - `js` as static file.
+
+> [!Warning]
+> `size` in **Fake CDN** only for images!
+
 ---
 
 ## Customization & Configuration
