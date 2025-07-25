@@ -83,10 +83,10 @@ python manage.py collectstatic
 3. Use in templates:
 ```html
 <!-- Basic usage -->
-<img src="/cdn{% static 'images/example.png' %}">
+<img src="/cdn[ STATIC ]">
 
 <!-- With resizing -->
-<img src="/cdn{% static 'images/example.png' %}?size=250">
+<img src="/cdn[ STATIC ]?size=250">
 ```
 
 ### Static File Optimization
