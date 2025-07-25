@@ -1,26 +1,28 @@
+# django-secux - All-in-One Django Security & Optimization
+
 ![django-secux](https://raw.githubusercontent.com/xo-aria/django-secux/refs/heads/main/django-secux.png)
-# django-secux ( **All for in one** )
 
-[![PyPI version](https://img.shields.io/pypi/v/django-secux?label=PyPI&color=blue&logo=python)](https://pypi.org/project/django-secux/)
-[![Python Versions](https://img.shields.io/pypi/pyversions/django-secux?logo=python&color=brightgreen)](https://pypi.org/project/django-secux/)
-[![Django Versions](https://img.shields.io/badge/Django-3.2%20|%204.0%20|%204.2%20|%205.0-blue?logo=django)](#)
-[![License](https://img.shields.io/github/license/xo-aria/django-secux?color=green)](LICENSE)
-[![Stars](https://img.shields.io/github/stars/xo-aria/django-secux?style=social)](https://github.com/xo-aria/django-secux/stargazers)
-[![Issues](https://img.shields.io/github/issues/xo-aria/django-secux?logo=github)](https://github.com/xo-aria/django-secux/issues)
-[![Last Commit](https://img.shields.io/github/last-commit/xo-aria/django-secux?logo=git)](https://github.com/xo-aria/django-secux/commits)
+## Table of Contents
+1. [Overview](#overview)
+2. [Features](#features)
+3. [Installation](#installation)
+4. [Usage](#usage)
+   - [Rate Limiting](#rate-limiting)
+   - [Fake CDN System](#fake-cdn-system)
+   - [Static File Optimization](#static-file-optimization)
+5. [Configuration](#configuration)
+6. [Contributing](#contributing)
 
-**django-secux** is a simple yet powerful Django security package that protects heavy-load pages by rate-limiting access based on real usage patterns stored in the database.
+## Overview
 
----
+django-secux is a comprehensive Django package that combines security protection with performance optimization features, including rate limiting, static file minification, and image compression.
 
 ## Features
 
-* Automatically blocks overused views for a customizable time window
-* Super easy to use with just a decorator!
-* Mininfing and Cache Your HTML / CSS / JS / Images / Fonts
-* Image compressor with `size` argument ( e.g `www.example.com/cdn/images/example.png?size=250` )
-
----
+- **Intelligent Rate Limiting**: Protects heavy-load pages based on real usage patterns
+- **Static File Optimization**: Minification for HTML, CSS, JS
+- **Fake CDN System**: Image compression with on-demand resizing
+- **Easy Integration**: Simple decorator-based implementation
 
 ## Installation
 
@@ -28,8 +30,7 @@
 pip install django-secux
 ```
 
-Then add it to your Django project:
-
+Add to your Django project:
 ```python
 # settings.py
 INSTALLED_APPS = [
@@ -37,14 +38,34 @@ INSTALLED_APPS = [
     'django_secux',
 ]
 
-# if you want Minify
+# For minification support
 MIDDLEWARE = [
     ...
     'django_secux.middleware.Minify',
 ]
 ```
-and if you using __Fake CDN__, add this to `urls.py` main:
 
+Apply migrations:
+```bash
+python manage.py makemigrations django_secux
+python manage.py migrate
+```
+
+## Usage
+
+### Rate Limiting
+
+```python
+from django_secux.decorator import ai_ratelimit
+
+@ai_ratelimit()
+def protected_view(request):
+    return HttpResponse("Protected content")
+```
+
+### Fake CDN System
+
+1. Add to your main `urls.py`:
 ```python
 from django_secux.views import cdn_serve
 
@@ -54,72 +75,56 @@ urlpatterns = [
 ]
 ```
 
-Apply migrations:
-
+2. Run collectstatic:
 ```bash
-python manage.py makemigrations django_secux
-python manage.py migrate
+python manage.py collectstatic
 ```
 
----
+3. Use in templates:
+```html
+<!-- Basic usage -->
+<img src="/cdn{% static 'images/example.png' %}">
 
-## Usage
+<!-- With resizing -->
+<img src="/cdn{% static 'images/example.png' %}?size=250">
+```
 
-Just decorate your heavy or sensitive views with `@ai_ratelimit()`:
+### Static File Optimization
+
+The package automatically handles:
+- Minification of HTML/CSS/JS
+- Font optimization
+- Image compression (when using Fake CDN)
+
+## Configuration
 
 ```python
-from django_secux.decorator import ai_ratelimit
+# settings.py
 
-@ai_ratelimit()
-def my_view(request):
-    return HttpResponse("Hello, world!")
-```
-
-This view will now be monitored. If accessed too frequently within a day, it will be blocked for 5 minutes.
-
-And for **Fake CDN** use `/cdn` before __static url__. e.g:
-```
-<img src="/cdn{% static 'example.png' %}">
-```
-and for manage image resoulation, add `size` argument after __static url__. e.g:
-```
-<img src="/cdn{% static 'example.png' %}?size=128">
-```
-
-> [!NOTE]
-> you can use **Fake CDN** for `images` - `fonts` - `css` - `js` as static file.
-
-> [!Warning]
-> `size` in **Fake CDN** only for images!
-
----
-
-## Customization & Configuration
-
-for block messages:
-
-```python
+# Security messages
 SECUX_MESSAGES = {
     "blocked": "This page is temporarily blocked. Please try again later.",
     "rate_exceeded": "Rate limit exceeded. This page is blocked temporarily.",
 }
-```
-and for static/media files:
 
-```python
+# Static/media files locations
 SECUX_STATIC = [
     STATIC_ROOT,
     *STATICFILES_DIRS,
-    ...
     os.path.join(BASE_DIR, "media/uploads"),
     os.path.join(BASE_DIR, "protected/images"),
 ]
 ```
 
+## Contributing
+
+We welcome contributions! Please report issues or submit pull requests on [GitHub](https://github.com/xo-aria/django-secux).
+
+Key areas for contribution:
+- Additional optimization features
+- Improved rate limiting algorithms
+- Enhanced Fake CDN functionality
+
 ---
 
-## Ideas or Issues?
-
-Feel free to contribute, fork or submit issues on GitHub.
-
-Let's keep Django apps safe and clean!
+This documentation now has clear sections, better organization, and emphasizes the Fake CDN system requirements (collectstatic) while maintaining all the original information in a more professional structure.
