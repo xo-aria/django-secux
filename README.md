@@ -108,6 +108,9 @@ and for static/media files:
 
 ```python
 SECUX_STATIC = [
+    STATIC_ROOT,
+    *STATICFILES_DIRS,
+    ...
     os.path.join(BASE_DIR, "media/uploads"),
     os.path.join(BASE_DIR, "protected/images"),
 ]
