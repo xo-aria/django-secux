@@ -16,7 +16,7 @@ def cdn_serve(request, file_path):
     if '..' in file_path or file_path.startswith('/'):
         return _svg_error()
 
-    abs_requested_path = os.path.abspath(os.path.join(settings.BASE_DIR, 'static', file_path))
+    abs_requested_path = os.path.abspath(os.path.join(settings.BASE_DIR, file_path))
 
     allowed = False
     for base in getattr(settings, 'SECUX_STATIC', []):
