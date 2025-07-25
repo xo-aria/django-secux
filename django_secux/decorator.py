@@ -3,7 +3,6 @@ from django.http import HttpResponse
 from django.utils.timezone import now
 from datetime import timedelta
 from .models import PageRequestLog
-from django.db.models import Avg, StdDev
 from django.conf import settings
 
 DEFAULT_MESSAGES = {
@@ -16,7 +15,7 @@ def get_secux_message(key):
 
 _block_memory = {}
 
-def ai_ratelimit(day_limit=7, std_multiplier=2, block_time=300):
+def ai_ratelimit_ewma(alpha=0.3, warmup_days=7, growth_factor=2.0, block_time=300):
     def decorator(view_func):
         @wraps(view_func)
         def _wrapped_view(request, *args, **kwargs):
@@ -31,17 +30,15 @@ def ai_ratelimit(day_limit=7, std_multiplier=2, block_time=300):
             obj.count += 1
             obj.save()
 
-            start_day = today - timedelta(days=day_limit)
-            qs = PageRequestLog.objects.filter(path=path, date__gte=start_day, date__lt=today)
-            if qs.count() < day_limit:
+            prev_days = PageRequestLog.objects.filter(path=path, date__lt=today).order_by('-date')[:30]
+            if prev_days.count() < warmup_days:
                 return view_func(request, *args, **kwargs)
 
-            agg = qs.aggregate(avg=Avg('count'), std=StdDev('count'))
-            avg = agg['avg'] or 0
-            std = agg['std'] or 0
-            threshold = avg + std_multiplier * std
+            ewma = prev_days[0].count
+            for log in prev_days[1:]:
+                ewma = alpha * log.count + (1 - alpha) * ewma
 
-            if obj.count > threshold:
+            if obj.count > ewma * growth_factor:
                 _block_memory[path] = now_time.timestamp() + block_time
                 return HttpResponse(get_secux_message("rate_exceeded"), status=429)
 
