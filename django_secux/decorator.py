@@ -5,8 +5,8 @@ from .models import PageRequestLog
 from django.conf import settings
 
 DEFAULT_MESSAGES = {
-    "blocked": "⛔ این صفحه موقتاً مسدود شده است. لطفاً بعداً تلاش کنید.",
-    "rate_exceeded": "⚠️ تعداد درخواست‌ها بیش از حد مجاز است. صفحه به‌طور موقت مسدود شد.",
+    "blocked": "⛔ This page is temporarily blocked. Please try again later.",
+    "rate_exceeded": "⚠️ Rate limit exceeded. This page is blocked temporarily.",
 }
 
 def get_secux_message(key):
@@ -28,25 +28,16 @@ def _render_blocked_page(message):
                 font-family: sans-serif;
                 text-align: center;
                 padding: 50px;
-                direction: rtl;
             }}
             .box {{
-                border: 1px solid #ddd;
                 display: inline-block;
                 padding: 30px;
-                border-radius: 12px;
-                box-shadow: 0 0 10px rgba(0,0,0,0.1);
                 background: white;
-            }}
-            .emoji {{
-                font-size: 40px;
-                margin-bottom: 10px;
             }}
         </style>
     </head>
     <body>
         <div class="box">
-            <div class="emoji">🚫</div>
             <h2>{message}</h2>
         </div>
     </body>
