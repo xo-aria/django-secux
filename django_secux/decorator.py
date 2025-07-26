@@ -5,8 +5,8 @@ from .models import PageRequestLog
 from django.conf import settings
 
 DEFAULT_MESSAGES = {
-    "blocked": "⛔ This page is temporarily blocked. Please try again later.",
-    "rate_exceeded": "⚠️ Rate limit exceeded. This page is blocked temporarily.",
+    "blocked": "This page is temporarily blocked. Please try again later.",
+    "rate_exceeded": "Rate limit exceeded. This page is blocked temporarily.",
 }
 
 def get_secux_message(key):
