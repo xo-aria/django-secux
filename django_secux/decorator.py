@@ -48,13 +48,17 @@ def _render_blocked_page(message):
                 width: 100px;
                 height: 100px;
             }}
+            .box p {{
+                font-size: 12px;
+                opacity: 0.6;
+            }}
         </style>
     </head>
     <body>
         <div class="box">
-            <img src="https://raw.githubusercontent.com/xo-aria/django-secux/refs/heads/main/restricted.png">
-            <h2>Protected By Secux</h2>
+            <img src="https://raw.githubusercontent.com/xo-aria/django-secux/refs/heads/main/restricted.png" draggable="false">
             <h2>{message}</h2>
+            <p>Protected By Secux</p>
         </div>
     </body>
     </html>
