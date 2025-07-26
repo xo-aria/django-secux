@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='django-secux',
-    version='1.8.0',
+    version='1.9.0',
     description='A lightweight Django security package with rate limiting decorator',
     author='XO Aria',
     author_email='hf18950@gmail.com',
