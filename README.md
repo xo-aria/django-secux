@@ -17,6 +17,9 @@
 
 django-secux is a comprehensive Django package that combines security protection with performance optimization features, including rate limiting, static file minification, and image compression.
 
+> [!Note]
+> `v2.0.0` Enhancing the Rate Limit page design
+
 ## Features
 
 - **Intelligent Rate Limiting**: Protects heavy-load pages based on real usage patterns
