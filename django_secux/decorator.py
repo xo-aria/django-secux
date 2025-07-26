@@ -26,18 +26,34 @@ def _render_blocked_page(message):
                 background: #fdfdfd;
                 color: #222;
                 font-family: sans-serif;
-                text-align: center;
-                padding: 50px;
+                width: 100%;
+                height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0;
             }}
             .box {{
                 display: inline-block;
                 padding: 30px;
                 background: white;
+                border: 1px solid #eee;
+                text-align: center;
+            }}
+            .box h2 {{
+                color: red;
+                font-weight: bold;
+            }}
+            .box img {{
+                width: 100px;
+                height: 100px;
             }}
         </style>
     </head>
     <body>
         <div class="box">
+            <img src="https://raw.githubusercontent.com/xo-aria/django-secux/refs/heads/main/restricted.png">
+            <h2>Protected By Secux</h2>
             <h2>{message}</h2>
         </div>
     </body>
