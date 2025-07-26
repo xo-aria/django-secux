@@ -20,6 +20,7 @@ def _render_blocked_page(message):
     <html lang="fa">
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{message}</title>
         <style>
             body {{
@@ -43,6 +44,7 @@ def _render_blocked_page(message):
             .box h2 {{
                 color: red;
                 font-weight: bold;
+                line-height: 2;
             }}
             .box img {{
                 width: 100px;
