@@ -11,3 +11,14 @@
 - [Document](https://xo-aria.github.io/django-secux/doc/) 
 - [Telegram](https://t.me/xo_community_dev)
 - [Author](https://t.me/ghanon_dar)
+
+## Features
+`v1.0.0`
+- AI ratelimit ( Check website/page traffic, and when abnormal traffic is detected, block the page. )
+- Fake CDN ( Smart compressor with built-in caching )
+
+`v2.0.0`
+- Minifing all pages
+
+`v3.0.0`
+- **[NEW]** Manage user sessions ( Manage an account with all sessions for that account )
