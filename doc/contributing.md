@@ -11,4 +11,4 @@ Key areas for contribution:
 
 ---
 
-[⬅️ Back to Index](index.md) | [⬆️ Menu](index.md)
+[Previous](configuration.md) | [Menu](index.md)
