@@ -14,17 +14,17 @@
 
 ## Features
 `v1.0.0`
-- AI ratelimit ( Check website/page traffic, and when abnormal traffic is detected, block the page. )
-- Fake CDN ( Smart compressor with built-in caching )
+- [+] AI ratelimit ( Check website/page traffic, and when abnormal traffic is detected, block the page. )
+- [+] Fake CDN ( Smart compressor with built-in caching )
 
 `v2.0.0`
-- Minifing all pages
+- [+] Minifing all pages
 
 `v3.0.0` **[NEW]**
-- Manage user sessions ( Manage an account with all sessions for that account )
+- [+] Manage user sessions ( Manage an account with all sessions for that account )
 
-`v4.0.0` **[SOON]**
-- Utils ( A simple and safe method for get `IP` and `User Agent` and ... )
+`v4.0.0` **[WORKING...]**
+- [+] Utils ( A simple and safe method for get `IP` and `User Agent` and ... )
 - Attack notification ( you can use it for `signals.py` )
 - Compress images size ( for `imageField` in `models` )
 
