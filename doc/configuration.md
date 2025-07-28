@@ -19,4 +19,4 @@ SECUX_STATIC = [
 
 ---
 
-[⬅️ Back to Index](index.md) | [⬆️ Menu](index.md)
+[Previous](usage.md) | [Menu](index.md) | [Next](contributing.md)
