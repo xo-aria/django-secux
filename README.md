@@ -22,9 +22,9 @@
 
 `v3.0.0` **[NEW]**
 - [+] Manage user sessions ( Manage an account with all sessions for that account )
-
-`v4.0.0` **[WORKING...]**
 - [+] Utils ( A simple and safe method for get `IP` and `User Agent` and ... )
+
+`v4.0.0` **[SOON]**
 - Attack notification ( you can use it for `signals.py` )
 - Compress images size ( for `imageField` in `models` )
 
