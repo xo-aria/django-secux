@@ -124,4 +124,4 @@ is_session_active(session_key)
 
 ---
 
-[Back to Index](index.md) | [Menu](index.md)
+[Previous](installation.md) | [Menu](index.md) | [Next](configuration.md)
