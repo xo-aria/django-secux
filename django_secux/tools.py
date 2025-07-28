@@ -24,11 +24,6 @@ def is_request_secure(request):
         return request.is_secure()
     return request.scheme == 'https'
 
-def sanitize_input(input_str, max_length=1000):
-    if not isinstance(input_str, str):
-        return ''
-    return html.escape(input_str.strip()[:max_length])
-
 # ======================== User Utilities ========================
 def get_user_meta(request):
     return {
