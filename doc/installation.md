@@ -31,4 +31,4 @@ python manage.py migrate
 
 ---
 
-[⬅️ Back to Index](index.md) | [⬆️ Menu](index.md)
+[Menu](index.md) | [Next](usage.md)
