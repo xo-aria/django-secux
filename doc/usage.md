@@ -1,10 +1,10 @@
 # Usage
 
-* [Rate Limiting](#rate-limiting)
-* [Fake CDN System](#fake-cdn-system)
+* [Rate Limiting](#rate-limiting-)
+* [Fake CDN System](#fake-cdn-system-)
 * [Static File Optimization](#static-file-optimization)
-* [User Session Management](#user-session-management)
-* [Utility Tools](#utility-tools)
+* [User Session Management](#user-session-management-)
+* [Utility Tools](#utility-tools-)
 
 ---
 
@@ -53,9 +53,9 @@ python manage.py collectstatic
 
 ## Static File Optimization
 
-* Minification of HTML/CSS/JS
-* Font optimization
-* Image compression (when using Fake CDN)
+* Minification of HTML/CSS/JS [(+)](https://github.com/xo-aria/django-secux/blob/main/django_secux/middleware.py)
+* Font optimization [(+)](https://github.com/xo-aria/django-secux/blob/016f0be3b90ae5cc30c7241c25b9e013738f786e/django_secux/views.py#L103)
+* Image compression (when using Fake CDN) [(+)](https://github.com/xo-aria/django-secux/blob/016f0be3b90ae5cc30c7241c25b9e013738f786e/django_secux/views.py#L58)
 
 ---
 
