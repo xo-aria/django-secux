@@ -20,5 +20,15 @@
 `v2.0.0`
 - Minifing all pages
 
-`v3.0.0`
-- **[NEW]** Manage user sessions ( Manage an account with all sessions for that account )
+`v3.0.0` **[NEW]**
+- Manage user sessions ( Manage an account with all sessions for that account )
+
+`v4.0.0` **[SOON]**
+- Utils ( A simple and safe method for get `IP` and `User Agent` )
+- Attack notification ( you can use it for `signals.py` )
+- Compress images size ( for `imageField` in `models` )
+
+`v5.0.0` **[SOON]**
+- Captcha ( A captcha image system )
+- SEO ( automatic generate meta seo tags )
+- Honeypot ( A trap for url and fake web page )
