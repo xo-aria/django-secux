@@ -24,7 +24,7 @@
 - Manage user sessions ( Manage an account with all sessions for that account )
 
 `v4.0.0` **[SOON]**
-- Utils ( A simple and safe method for get `IP` and `User Agent` )
+- Utils ( A simple and safe method for get `IP` and `User Agent` and ... )
 - Attack notification ( you can use it for `signals.py` )
 - Compress images size ( for `imageField` in `models` )
 
