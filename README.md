@@ -41,6 +41,7 @@
 `v7.0.0` **[SOON]**
 - Admin dashboard
 - Detect suspicious file on upload ( e.g: `image.png.php` )
+- Session Signature ( Prevent session theft )
 
 `v8.0.0` **[SOON]**
 - Protect uploaded files
