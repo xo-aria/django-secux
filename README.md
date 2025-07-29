@@ -32,3 +32,20 @@
 - Captcha ( A captcha image system )
 - SEO ( automatic generate meta seo tags )
 - Honeypot ( A trap for url and fake web page )
+
+`v6.0.0` **[SOON]**
+- CSP Rules
+- Support `async`
+
+`v7.0.0` **[SOON]**
+- Admin dashboard
+- Detect suspicious file
+
+`v8.0.0` **[SOON]**
+- Protect uploaded files
+- Detect and clean up useless files
+
+`v9.0.0` **[SOON]**
+- Sensitive path locking
+- Smart protection ( sensitive pages such as login and contact us are automatically closed when attacked )
+- Creating Automatic Preloading
