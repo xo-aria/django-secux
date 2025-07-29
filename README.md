@@ -40,13 +40,13 @@
 
 `v7.0.0` **[SOON]**
 - Admin dashboard
-- Detect suspicious file
+- Detect suspicious file on upload ( e.g: `image.png.php` )
 
 `v8.0.0` **[SOON]**
 - Protect uploaded files
-- Detect and clean up useless files
+- Detect and clean up useless files for `media` and `static`
 
 `v9.0.0` **[SOON]**
-- Sensitive path locking
+- Sensitive path locking ( It has a password system that repels bots and the password is secured in the backend )
 - Smart protection ( sensitive pages such as login and contact us are automatically closed when attacked )
-- Creating Automatic Preloading
+- Creating Automatic Preloading Meta Tags ( CAPMT )
