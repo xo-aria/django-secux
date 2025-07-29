@@ -30,11 +30,12 @@
 
 `v5.0.0` **[SOON]**
 - Captcha ( A captcha image system )
-- SEO ( automatic generate meta seo tags )
+- JS Challenge ( a way to detect robots )
 - Honeypot ( A trap for url and fake web page )
 
 `v6.0.0` **[SOON]**
 - CSP Rules
+- SEO ( automatic generate meta seo tags )
 - Support `async`
 
 `v7.0.0` **[SOON]**
