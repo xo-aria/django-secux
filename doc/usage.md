@@ -6,6 +6,7 @@
 * [User Session Management](#user-session-management-)
 * [Utility Tools](#utility-tools-)
 * [Optimize ImageField](#optimize-imagefield-)
+* [Captcha](#captcha-)
 
 ---
 
@@ -228,6 +229,31 @@ from django_secux.models import OptimizeImageField
 class Test(models.Model):
     avatar = OptimizeImageField(upload_to='test/', name=f'test.jpg', size=(300, 300))
 ```
+
+---
+
+## Captcha [(+)](https://github.com/xo-aria/django-secux/blob/main/django_secux/captcha.py)
+
+### Usage in views
+```python
+from django_secux import captcha
+
+def your_views(request):
+    if captcha.is_captcha_valid(request):
+        return HttpResponse(f'Success!')
+    else:
+        return HttpResponse(f'Failed!')
+```
+
+### Usage in templates
+{% raw %}
+```html
+{% load secux_captcha %}
+...
+<img src="{% captcha_src %}">
+<input name="secux_captcha_input">
+```
+{% endraw %}
 
 ---
 
