@@ -1,6 +1,10 @@
 from django.db import models
-from django.db import models
 from django.contrib.auth.models import User
+from PIL import Image
+from io import BytesIO
+from django.core.files.base import ContentFile
+from django.db.models.fields.files import ImageFieldFile
+
 
 class UserSession(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sessions')
@@ -17,6 +21,7 @@ class UserSession(models.Model):
     def __str__(self):
         return f"{self.user} - {self.session_key}"
 
+
 class PageRequestLog(models.Model):
     path = models.CharField(max_length=255)
     date = models.DateField()
@@ -27,3 +32,29 @@ class PageRequestLog(models.Model):
 
     def __str__(self):
         return f"{self.path} - {self.date} - {self.count}"
+
+
+class OptimizedImageFile(ImageFieldFile):
+    def save(self, name, content, save=True):
+        try:
+            quality = getattr(self.field, 'quality', 70)
+            file_name = getattr(self.field, 'custom_name', name)
+            image = Image.open(content)
+            if image.mode in ("RGBA", "P"):
+                image = image.convert("RGB")
+            buffer = BytesIO()
+            image.save(buffer, format='JPEG', quality=quality, optimize=True)
+            buffer.seek(0)
+            content = ContentFile(buffer.read(), name=file_name)
+        except Exception:
+            pass
+        super().save(name, content, save)
+
+
+class OptimizeImageField(models.ImageField):
+    attr_class = OptimizedImageFile
+
+    def __init__(self, *args, quality=70, name=None, **kwargs):
+        self.quality = quality
+        self.custom_name = name
+        super().__init__(*args, **kwargs)
