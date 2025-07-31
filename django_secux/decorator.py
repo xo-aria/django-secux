@@ -104,7 +104,6 @@ def ai_ratelimit(alpha=0.3, warmup_days=7, growth_factor=2.0, block_time=300):
                     request=request,
                     path=path,
                     count=obj.count,
-                    ewma=ewma,
                     reason="rate_exceeded"
                 )
                 return _render_blocked_page(get_secux_message("rate_exceeded"))
