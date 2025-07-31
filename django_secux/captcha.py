@@ -2,7 +2,6 @@ import random
 import base64
 from io import BytesIO
 from PIL import Image, ImageDraw, ImageFont
-from django.conf import settings
 
 def generate_captcha_text():
     return str(random.randint(10000, 99999))
