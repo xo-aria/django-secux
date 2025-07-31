@@ -7,6 +7,7 @@
 * [Utility Tools](#utility-tools-)
 * [Optimize ImageField](#optimize-imagefield-)
 * [Captcha](#captcha-)
+* [JS Challenge](#js-challenge)
 
 ---
 
@@ -254,6 +255,19 @@ def your_views(request):
 <input name="secux_captcha_input">
 ```
 {% endraw %}
+
+---
+
+## JS Challenge
+
+### Usage in views
+```python
+from django_secux.decorator import js_challenge
+
+@js_challenge
+def your_views(request):
+    return HttpResponse('Hello world!')
+```
 
 ---
 
