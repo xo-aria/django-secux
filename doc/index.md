@@ -7,5 +7,7 @@ Welcome to the official documentation for **django-secux**.
   - [Static File Optimization](usage.md#static-file-optimization)
   - [User Session Management](usage.md#user-session-management-)
   - [Utility Tools](usage.md#utility-tools-)
+  - [Optimize ImageField](usage.md#optimize-imagefield-)
+  - [Captcha](usage.md#captcha-)
 - [Configuration](configuration.md)
 - [Contributing](contributing.md)
