@@ -37,8 +37,7 @@ class PageRequestLog(models.Model):
 class OptimizedImageFile(ImageFieldFile):
     def save(self, name, content, save=True):
         try:
-            quality = getattr(self.field, 'quality', 70)
-            file_name = getattr(self.field, 'custom_name', name)
+            file_name = getattr(self.field, 'custom_name', None) or name
             size = getattr(self.field, 'resize_to', None)
 
             image = Image.open(content)
@@ -47,24 +46,23 @@ class OptimizedImageFile(ImageFieldFile):
                 image = image.convert("RGB")
 
             if size and isinstance(size, tuple) and len(size) == 2:
-                image = image.resize(size, Image.ANTIALIAS)
+                image.thumbnail(size, Image.LANCZOS)
 
             buffer = BytesIO()
-            image.save(buffer, format='JPEG', quality=quality, optimize=True)
+            image.save(buffer, format='JPEG', optimize=True)
             buffer.seek(0)
             content = ContentFile(buffer.read(), name=file_name)
 
         except Exception as e:
             print(f"[OptimizeImageField Error] {e}")
 
-        super().save(name, content, save)
+        super().save(file_name, content, save)
 
 
 class OptimizeImageField(models.ImageField):
     attr_class = OptimizedImageFile
 
-    def __init__(self, *args, quality=70, name=None, size=None, **kwargs):
-        self.quality = quality
+    def __init__(self, *args, name=None, size=None, **kwargs):
         self.custom_name = name
         self.resize_to = size
         super().__init__(*args, **kwargs)
