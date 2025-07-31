@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.utils.timezone import now
 from .models import PageRequestLog
 from django.conf import settings
+from .signals import attack_detected
 
 DEFAULT_MESSAGES = {
     "blocked": "This page is temporarily blocked. Please try again later.",
