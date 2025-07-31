@@ -8,7 +8,7 @@ def generate_captcha_text():
     return str(random.randint(10000, 99999))
 
 def generate_captcha_image(text):
-    width, height = 200, 80
+    width, height = 120, 40
     img = Image.new('RGB', (width, height), (255, 255, 255))
     draw = ImageDraw.Draw(img)
 
