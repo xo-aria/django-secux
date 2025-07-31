@@ -25,7 +25,7 @@
 - [+] Utils ( A simple and safe method for get `IP` and `User Agent` and ... )
 
 `v4.0.0` **[SOON]**
-- Attack notification ( you can use it for `signals.py` )
+- [+] Attack notification ( you can use it for `signals.py` )
 - Compress images size ( for `imageField` in `models` )
 
 `v5.0.0` **[SOON]**
