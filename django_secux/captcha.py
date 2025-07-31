@@ -12,7 +12,6 @@ def generate_captcha_image(text):
     img = Image.new('RGB', (width, height), (255, 255, 255))
     draw = ImageDraw.Draw(img)
 
-
     font = ImageFont.load_default()
     font.size = 36
 
@@ -25,7 +24,7 @@ def generate_captcha_image(text):
 
     for _ in range(5):
         draw.line(
-            [(random.randint(0, width), random.randint(0, height), 
+            [(random.randint(0, width), random.randint(0, height)), 
              (random.randint(0, width), random.randint(0, height))],
             fill=(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)), 
             width=1
