@@ -5,6 +5,7 @@
 * [Static File Optimization](#static-file-optimization)
 * [User Session Management](#user-session-management-)
 * [Utility Tools](#utility-tools-)
+* [Optimize ImageField](#optimize-imagefield-)
 
 ---
 
@@ -203,6 +204,29 @@ dst.is_mobile_device(request)
 
 ```python
 dst.get_client_fingerprint(request)
+```
+
+---
+
+## Optimize ImageField [(+)](https://github.com/xo-aria/django-secux/blob/175aa18b8860dc442f0fbcfc50abb3246a1abda5/django_secux/models.py#L37)
+
+### Import
+```python
+from django_secux.models import OptimizeImageField
+```
+
+### Usage in models
+```python
+image = OptimizeImageField(upload_to='image/', name=f'image.jpg', size=(300, 300))
+```
+
+### Example
+```python
+from django.db import models
+from django_secux.models import OptimizeImageField
+
+class Test(models.Model):
+    avatar = OptimizeImageField(upload_to='test/', name=f'test.jpg', size=(300, 300))
 ```
 
 ---
