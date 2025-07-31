@@ -30,11 +30,11 @@ pip install django-secux -U
 `v2.0.0`
 - [+] Minifing all pages
 
-`v3.0.0` **[NEW]**
+`v3.0.0`
 - [+] Manage user sessions ( Manage an account with all sessions for that account )
 - [+] Utils ( A simple and safe method for get `IP` and `User Agent` and ... )
 
-`v4.0.0` **[SOON]**
+`v4.0.0` **[NEW]**
 - [+] Attack notification ( you can use it for `signals.py` )
 - [+] Compress images size ( for `imageField` in `models` )
 
