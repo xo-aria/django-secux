@@ -39,7 +39,7 @@ pip install django-secux -U
 - [+] Compress images size ( for `imageField` in `models` )
 
 `v5.0.0` **[SOON]**
-- Captcha ( A captcha image system )
+- [+] Captcha ( A captcha image system )
 - JS Challenge ( a way to detect robots )
 - Honeypot ( A trap for url and fake web page )
 
