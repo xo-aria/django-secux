@@ -12,6 +12,16 @@
 - [Telegram](https://t.me/xo_community_dev)
 - [Author](https://t.me/ghanon_dar)
 
+### For install
+```
+pip install django-secux
+```
+
+### For update package
+```
+pip install django-secux -U
+```
+
 ## Features
 `v1.0.0`
 - [+] AI ratelimit ( Check website/page traffic, and when abnormal traffic is detected, block the page. )
