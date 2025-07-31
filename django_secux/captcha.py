@@ -13,7 +13,7 @@ def generate_captcha_image(text):
     draw = ImageDraw.Draw(img)
 
     font = ImageFont.load_default()
-    font.size = 50
+    font.size = 100
 
     bbox = draw.textbbox((0, 0), text, font=font)
     text_width = bbox[2] - bbox[0]
