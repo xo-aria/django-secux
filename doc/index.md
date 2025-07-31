@@ -9,5 +9,6 @@ Welcome to the official documentation for **django-secux**.
   - [Utility Tools](usage.md#utility-tools-)
   - [Optimize ImageField](usage.md#optimize-imagefield-)
   - [Captcha](usage.md#captcha-)
+  - [JS Challenge](usage.md#js-challenge-)
 - [Configuration](configuration.md)
 - [Contributing](contributing.md)
