@@ -77,6 +77,12 @@ def ai_ratelimit(alpha=0.3, warmup_days=7, growth_factor=2.0, block_time=300):
             today = now_time.date()
 
             if path in _block_memory and _block_memory[path] > now_time.timestamp():
+                attack_detected.send(
+                    sender=view_func,
+                    request=request,
+                    path=path,
+                    reason="previously_blocked"
+                )
                 return _render_blocked_page(get_secux_message("blocked"))
 
             obj, _ = PageRequestLog.objects.get_or_create(path=path, date=today)
@@ -93,6 +99,14 @@ def ai_ratelimit(alpha=0.3, warmup_days=7, growth_factor=2.0, block_time=300):
 
             if obj.count > ewma * growth_factor:
                 _block_memory[path] = now_time.timestamp() + block_time
+                attack_detected.send(
+                    sender=view_func,
+                    request=request,
+                    path=path,
+                    count=obj.count,
+                    ewma=ewma,
+                    reason="rate_exceeded"
+                )
                 return _render_blocked_page(get_secux_message("rate_exceeded"))
 
             return view_func(request, *args, **kwargs)
