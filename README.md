@@ -26,7 +26,7 @@
 
 `v4.0.0` **[SOON]**
 - [+] Attack notification ( you can use it for `signals.py` )
-- Compress images size ( for `imageField` in `models` )
+- [+] Compress images size ( for `imageField` in `models` )
 
 `v5.0.0` **[SOON]**
 - Captcha ( A captcha image system )
