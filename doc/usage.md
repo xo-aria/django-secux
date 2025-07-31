@@ -18,6 +18,31 @@ def protected_view(request):
     return HttpResponse("Protected content")
 ```
 
+and a receiver for when blocked:
+
+```python
+from django.dispatch import receiver
+from django_secux.signals import attack_detected
+
+@receiver(attack_detected)
+def log_attack(sender, **kwargs):
+    request = kwargs.get("request")
+    path = kwargs.get("path")
+    reason = kwargs.get("reason")
+    ip = request.META.get("REMOTE_ADDR") if request else "unknown"
+    user_agent = request.META.get("HTTP_USER_AGENT", "unknown") if request else "unknown"
+    count = kwargs.get("count")
+
+    log_message = "[SECUX] Attack detected:\n"
+    log_message += f"  View: {sender.__name__ if sender else 'unknown'}\n"
+    log_message += f"  Path: {path}\n"
+    log_message += f"  IP: {ip}\n"
+    log_message += f"  Reason: {reason}\n"
+    log_message += f"  User-Agent: {user_agent}\n"
+
+    print(log_message)
+```
+
 ---
 
 ## Fake CDN System [(+)](https://github.com/xo-aria/django-secux/blob/main/django_secux/views.py)
