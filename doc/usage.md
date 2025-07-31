@@ -42,7 +42,8 @@ def log_attack(sender, **kwargs):
 
     print(log_message)
 ```
-
+> [!Tip]
+> You can use it for `EMAIL` and `Webhook` and `Log`.
 ---
 
 ## Fake CDN System [(+)](https://github.com/xo-aria/django-secux/blob/main/django_secux/views.py)
