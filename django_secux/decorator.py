@@ -10,6 +10,28 @@ DEFAULT_MESSAGES = {
     "rate_exceeded": "Rate limit exceeded. This page is blocked temporarily.",
 }
 
+def js_challenge(view_func):
+    @wraps(view_func)
+    def _wrapped_view(request, *args, **kwargs):
+        if request.COOKIES.get('js_verified') == 'true':
+            return view_func(request, *args, **kwargs)
+
+        if 'js_verified=true' in request.META.get('HTTP_COOKIE', ''):
+            return view_func(request, *args, **kwargs)
+
+        js_code = f"""
+        <script>
+            document.cookie = "js_verified=true; path=/";
+            window.location.href = "{request.get_full_path()}";
+        </script>
+        <noscript>
+            <h3>JavaScript is required to access this content.</h3>
+        </noscript>
+        """
+        return HttpResponse(js_code, content_type="text/html")
+
+    return _wrapped_view
+
 def get_secux_message(key):
     return getattr(settings, "SECUX_MESSAGES", {}).get(key, DEFAULT_MESSAGES.get(key))
 
