@@ -38,10 +38,10 @@ pip install django-secux -U
 - [+] Attack notification ( you can use it for `signals.py` )
 - [+] Compress images size ( for `imageField` in `models` )
 
-`v5.0.0` **[SOON]**
+`v5.0.0`
 - [+] Captcha ( A captcha image system )
 - [+] JS Challenge ( a way to detect robots )
-- Honeypot ( A trap for url and fake web page )
+- [+] Honeypot ( A trap for url and fake web page )
 
 `v6.0.0` **[SOON]**
 - CSP Rules
