@@ -5,8 +5,6 @@ from django.conf import settings
 from django.utils.html import escape
 from django.http import HttpResponse
 from django_secux.signals import honeypot_trap_triggered
-from django.utils.deprecation import MiddlewareMixin
-
 
 HTML_TYPES = ('text/html', 'application/xhtml+xml')
 
@@ -43,6 +41,18 @@ def generate_fake_tags():
             fake_tags.append(f'<script>let x=new XMLHttpRequest();x.open("GET","{escape(path)}",true);x.send();</script>')
     return '\n'.join(fake_tags)
 
+def generate_fake_page(target_url):
+    return f"""
+    <!DOCTYPE html>
+    <html>
+    <head><title>Redirecting...</title></head>
+    <body>
+    <h2>Session expired</h2>
+    <p>Your session has expired or is invalid. Please <a href="{escape(target_url)}">click here</a> to re-authenticate.</p>
+    </body>
+    </html>
+    """
+
 class Honeypot(MiddlewareMixin):
     def process_request(self, request):
         if request.path in FAKE_URLS:
@@ -53,6 +63,10 @@ class Honeypot(MiddlewareMixin):
                 path=request.path,
                 user_agent=request.META.get('HTTP_USER_AGENT', ''),
             )
+            if request.method == 'POST':
+                bait_url = random.choice([url for url in FAKE_URLS if url != request.path])
+                html = generate_fake_page(bait_url)
+                return HttpResponse(html, status=200, content_type='text/html')
             return HttpResponse("404 Not Found", status=404)
 
     def process_response(self, request, response):
@@ -69,9 +83,6 @@ class Honeypot(MiddlewareMixin):
             except Exception:
                 pass
         return response
-
-
-HTML_TYPES = ('text/html', 'application/xhtml+xml')
 
 SCRIPT_STYLE_RE = re.compile(r'(?P<script><script.*?>.*?</script>)', re.DOTALL | re.IGNORECASE)
 COMMENT_RE = re.compile(r'<!--(?!\[if).*?-->', re.DOTALL)
