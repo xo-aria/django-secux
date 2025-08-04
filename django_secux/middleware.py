@@ -38,7 +38,7 @@ def generate_fake_tags():
         elif tag_type == 'fetch':
             fake_tags.append(f'<script>fetch("{escape(path)}").then(()=>{{}}).catch(()=>{{}})</script>')
         elif tag_type == 'xhr':
-            fake_tags.append(f'<script>let x=new XMLHttpRequest();x.open("GET","{escape(path)}",true);x.send();</script>')
+            fake_tags.append(f'<script>let x=new XMLHttpRequest();x.open("POST","{escape(path)}",true);x.send();</script>')
     return '\n'.join(fake_tags)
 
 def generate_fake_page(target_url):
