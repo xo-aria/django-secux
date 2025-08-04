@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "django-secux"
-version = "5.8.0"
+version = "5.8.5"
 description = "All-in-One Django Security & Optimization"
 readme = "README.md"
 authors = [{ name = "XO Aria", email = "hf18950@gmail.com" }]
