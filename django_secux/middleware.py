@@ -1,16 +1,12 @@
-import re
+import random
 from django.utils.deprecation import MiddlewareMixin
 from django.conf import settings
 from django.utils.html import escape
+from django.http import HttpResponse
 from django_secux.signals import honeypot_trap_triggered
+from django.utils.deprecation import MiddlewareMixin
 
-_HTML_TYPES = ('text/html', 'application/xhtml+xml')
-
-SCRIPT_STYLE_RE = re.compile(r'(?P<script><script.*?>.*?</script>)', re.DOTALL | re.IGNORECASE)
-COMMENT_RE = re.compile(r'<!--(?!\[if).*?-->', re.DOTALL)
-TAG_SPACE_RE = re.compile(r'>\s+<')
-WHITESPACE_RE = re.compile(r'\s{2,}')
-IMG_RE = re.compile(r'<img(?![^>]*loading=)([^>]*?)>', re.IGNORECASE)
+HTML_TYPES = ('text/html', 'application/xhtml+xml')
 
 FAKE_URLS = getattr(settings, 'SECUX_FAKE_URLS', [
     '/wp-admin.php',
@@ -19,7 +15,67 @@ FAKE_URLS = getattr(settings, 'SECUX_FAKE_URLS', [
     '/.env',
     '/cpanel/',
     '/backup.zip',
+    '/config.json',
+    '/cdn/jquery.js',
+    '/old-login',
+    '/dashboard/api',
+    '/auth/session',
+    '/includes/init.php'
 ])
+
+def generate_fake_tags():
+    fake_tags = []
+    for path in random.sample(FAKE_URLS, min(6, len(FAKE_URLS))):
+        tag_type = random.choice(['script', 'img', 'link', 'fetch', 'xhr', 'iframe'])
+        if tag_type == 'script':
+            fake_tags.append(f'<script src="{escape(path)}" defer async></script>')
+        elif tag_type == 'img':
+            fake_tags.append(f'<img src="{escape(path)}" style="display:none;" width="1" height="1" loading="lazy">')
+        elif tag_type == 'link':
+            fake_tags.append(f'<link rel="preload" href="{escape(path)}" as="script">')
+        elif tag_type == 'iframe':
+            fake_tags.append(f'<iframe src="{escape(path)}" style="display:none;" loading="lazy"></iframe>')
+        elif tag_type == 'fetch':
+            fake_tags.append(f'<script>fetch("{escape(path)}").then(()=>{{}}).catch(()=>{{}})</script>')
+        elif tag_type == 'xhr':
+            fake_tags.append(f'<script>let x=new XMLHttpRequest();x.open("GET","{escape(path)}",true);x.send();</script>')
+    return '\n'.join(fake_tags)
+
+class Honeypot(MiddlewareMixin):
+    def process_request(self, request):
+        if request.path in FAKE_URLS:
+            honeypot_trap_triggered.send(
+                sender=self.__class__,
+                request=request,
+                ip=request.META.get('REMOTE_ADDR'),
+                path=request.path,
+                user_agent=request.META.get('HTTP_USER_AGENT', ''),
+            )
+            return HttpResponse("404 Not Found", status=404)
+
+    def process_response(self, request, response):
+        content_type = response.get('Content-Type', '')
+        if request.method == "GET" and any(ct in content_type for ct in HTML_TYPES) and response.status_code == 200:
+            try:
+                content = response.content.decode('utf-8')
+                if '</body>' in content:
+                    injected = generate_fake_tags()
+                    content = content.replace('</body>', f'{injected}\n</body>')
+                    content = f"<!-- Protected by Secux -->\n{content}"
+                    response.content = content.encode('utf-8')
+                    response['Content-Length'] = str(len(response.content))
+            except Exception:
+                pass
+        return response
+
+
+HTML_TYPES = ('text/html', 'application/xhtml+xml')
+
+SCRIPT_STYLE_RE = re.compile(r'(?P<script><script.*?>.*?</script>)', re.DOTALL | re.IGNORECASE)
+COMMENT_RE = re.compile(r'<!--(?!\[if).*?-->', re.DOTALL)
+TAG_SPACE_RE = re.compile(r'>\s+<')
+WHITESPACE_RE = re.compile(r'\s{2,}')
+IMG_RE = re.compile(r'<img(?![^>]*loading=)([^>]*?)>', re.IGNORECASE)
 
 def minify_html_safe(html):
     parts = []
@@ -42,35 +98,14 @@ def minify_html_safe(html):
     parts.append(remainder)
     return ''.join(parts).strip()
 
-class MinifyAndInjectFakeScripts(MiddlewareMixin):
-    def process_request(self, request):
-        if request.path in FAKE_URLS:
-            honeypot_trap_triggered.send(
-                sender=self.__class__,
-                request=request,
-                ip=request.META.get('REMOTE_ADDR'),
-                path=request.path,
-                user_agent=request.META.get('HTTP_USER_AGENT', ''),
-            )
-
-            from django.http import HttpResponse
-            return HttpResponse("404 Not Found", status=404)
-
+class Minify(MiddlewareMixin):
     def process_response(self, request, response):
         content_type = response.get('Content-Type', '')
-        if any(ct in content_type for ct in _HTML_TYPES):
+        if request.method == "GET" and any(ct in content_type for ct in HTML_TYPES) and response.status_code == 200:
             try:
                 content = response.content.decode('utf-8')
-                injected = "\n".join(
-                    f'<script src="{escape(path)}" defer async></script>'
-                    for path in FAKE_URLS
-                )
-                if '</body>' in content:
-                    content = content.replace('</body>', f'{injected}\n</body>')
-
                 minified = minify_html_safe(content)
-                protected = f"<!-- Protected By Secux -->\n{minified}"
-                response.content = protected.encode('utf-8')
+                response.content = minified.encode('utf-8')
                 response['Content-Length'] = str(len(response.content))
             except Exception:
                 pass
