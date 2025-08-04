@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='django-secux',
-    version='5.6.0',
+    version='5.7.0',
     description='All-in-One Django Security & Optimization',
     author='XO Aria',
     author_email='hf18950@gmail.com',
