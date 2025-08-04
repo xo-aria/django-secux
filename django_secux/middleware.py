@@ -1,3 +1,4 @@
+import re
 import random
 from django.utils.deprecation import MiddlewareMixin
 from django.conf import settings
@@ -5,6 +6,7 @@ from django.utils.html import escape
 from django.http import HttpResponse
 from django_secux.signals import honeypot_trap_triggered
 from django.utils.deprecation import MiddlewareMixin
+
 
 HTML_TYPES = ('text/html', 'application/xhtml+xml')
 
