@@ -2,12 +2,13 @@
 
 * [Rate Limiting](#rate-limiting-)
 * [Fake CDN System](#fake-cdn-system-)
-* [Static File Optimization](#static-file-optimization)
+* [Static File Optimization](#smart-minify)
 * [User Session Management](#user-session-management-)
 * [Utility Tools](#utility-tools-)
 * [Optimize ImageField](#optimize-imagefield-)
 * [Captcha](#captcha-)
-* [JS Challenge](#js-challenge)
+* [JS Challenge](#js-challenge-)
+* [Honeypot](#honeypot-)
 
 ---
 
@@ -80,11 +81,26 @@ python manage.py collectstatic
 
 ---
 
-## Static File Optimization
+## Smart Minify
 
-* Minification of HTML/CSS/JS [(+)](https://github.com/xo-aria/django-secux/blob/main/django_secux/middleware.py)
-* Font optimization [(+)](https://github.com/xo-aria/django-secux/blob/016f0be3b90ae5cc30c7241c25b9e013738f786e/django_secux/views.py#L103)
-* Image compression (when using Fake CDN) [(+)](https://github.com/xo-aria/django-secux/blob/016f0be3b90ae5cc30c7241c25b9e013738f786e/django_secux/views.py#L58)
+### Minification of HTML/CSS/JS [(+)](https://github.com/xo-aria/django-secux/blob/main/django_secux/middleware.py#L114)
+```python
+MIDDLEWARE = [
+    ...
+    'django_secux.middleware.Minify'
+]
+```
+
+# Use for css/js
+{% raw %}
+```html
+<link rel="stylesheet" href="/cdn{% static 'style.css' %}" />
+
+...
+
+<script src="/cdn{% static 'script.js' %}"></script>
+```
+{% endraw %}
 
 ---
 
@@ -258,7 +274,7 @@ def your_views(request):
 
 ---
 
-## JS Challenge
+## JS Challenge [(+)](https://github.com/xo-aria/django-secux/blob/7b88e7d47451c54e93e35ccfc9f2cabcdcb24807/django_secux/decorator.py#L13)
 
 ### Usage in views
 ```python
@@ -267,6 +283,18 @@ from django_secux.decorator import js_challenge
 @js_challenge
 def your_views(request):
     return HttpResponse('Hello world!')
+```
+
+---
+
+## Honeypot [(+)](https://github.com/xo-aria/django-secux/blob/main/django_secux/middleware.py)
+
+### Usage
+```python
+MIDDLEWARE = [
+    ...
+    'django_secux.middleware.Honeypot'
+]
 ```
 
 ---
