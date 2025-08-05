@@ -2,7 +2,7 @@
 
 * [Rate Limiting](#rate-limiting-)
 * [Fake CDN System](#fake-cdn-system-)
-* [Static File Optimization](#smart-minify)
+* [Smart minify](#smart-minify)
 * [User Session Management](#user-session-management-)
 * [Utility Tools](#utility-tools-)
 * [Optimize ImageField](#optimize-imagefield-)
